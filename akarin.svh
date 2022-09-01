@@ -25,17 +25,15 @@ typedef enum logic [7:0] {
     ALU_SRA,        // SRA, SRAI
 } alu_op_t;
 
+typedef enum logic [7:0] { 
+    DEC_NOP = 0
+} decOp;
+
 // デコードステージからフェッチステージへのパケット
 typedef struct packed {
     logic [31:2] pc;
     logic pcValid;
 } dec2ifPkt;
-
-typedef enum logic [7:0] { 
-    ALU_NOP = 0,
-    ALU_ADD,
-    
-} alu_op_t;
 
 
 // フェッチステージからデコードステージへのパケット
@@ -50,12 +48,24 @@ typedef struct packed {
     logic [31:2] pc;
     logic [31:0] inst32;
     logic        instValid;
+    alu_op_t aluOp;
+    logic [4:0] destReg;
+    logic [31:0] src1, src2;
 } dec2exPkt;
 
 typedef struct packed {
-    
+    logic [31:2] pc;
+    logic [31:0] inst32;
+    logic instValid;
+
+    logic [4:0] destReg;
+    logic [31:0] res, aux;
 } ex2memPkt;
 
 typedef struct packed {
-    
+    logic [31:2] pc;
+    logic [31:0] inst32;
+    logic instValid;
+    logic [4:0] destReg;
+    logic [31:0] res;
 } mem2wbPkt;
