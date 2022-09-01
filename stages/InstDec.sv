@@ -18,6 +18,9 @@
 *
 *******************************************************************/
 
+`include "../akarin.svh"
+`include "../ISA/RISCV_ISA.sv"
+
 module InstDec(
     input logic clk, rst,
     input logic stall,
@@ -69,7 +72,7 @@ module InstDec(
             // 演算命令 : Type-R
             `OP_OP : begin
                 // Type-R命令で共通
-                dex2ex_o.destReg ~ if2dec_reg.inst32[11:7];
+                dex2ex_o.destReg = if2dec_reg.inst32[11:7];
                 dec2ex_o.src1 = rs1Val;
                 dec2ex_o.src2 = rs2Val;
 

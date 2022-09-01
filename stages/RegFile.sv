@@ -40,7 +40,7 @@ module RegFile(
 
     always_ff @(posedge clk) begin
         if (regWrite_i) begin
-            rf[rdNum_i] <= rdVal_i
+            rf[rdNum_i] <= rdVal_i;
         end
     end
 
@@ -56,7 +56,7 @@ module RegFile(
         if (rs2Num_i == rdNum_i) begin
             rs2Val_o <= rdVal_i;
         end else begin
-            rs2Valo <= rf[rs2Num_i];
+            rs2Val_o <= rf[rs2Num_i];
         end
     end
 endmodule

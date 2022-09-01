@@ -22,12 +22,12 @@ typedef enum logic [7:0] {
     ALU_SLTU,       // SLTU, SLTIU
     ALU_SLL,        // SLL, SLLI
     ALU_SRL,        // SRL, SRLI
-    ALU_SRA,        // SRA, SRAI
+    ALU_SRA        // SRA, SRAI
 } alu_op_t;
 
 typedef enum logic [7:0] { 
     DEC_NOP = 0
-} decOp;
+} dec_op_t;
 
 // デコードステージからフェッチステージへのパケット
 typedef struct packed {

@@ -24,7 +24,7 @@
 *   byteSel_o       : バイトセレクタ,命令は32ビット固定なので常にオール1
 *******************************************************************/
 
-`include "akarin.svh"
+`include "../akarin.svh"
 
 module InstFetch(
     input   logic clk, rst,
