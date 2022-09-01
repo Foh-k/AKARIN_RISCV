@@ -37,8 +37,7 @@
 `define FN3_OR              3'b110
 `define FN3_XOR             3'b100
 `define FN3_SLL             3'b001
-`define FN3_SRA             3'b101
-`define FN3_SRL             3'b101
+`define FN3_SR              3'b101
 
 
 `define FN3_BEQ             3'b000
