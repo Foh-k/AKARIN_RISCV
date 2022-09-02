@@ -10,7 +10,7 @@
 
 `include "../akarin.svh"
 
-module alu(
+module ALU(
     input clk, rst,
     input logic stall,
     input dec2exPkt dec2ex_i,

@@ -1,11 +1,13 @@
 # top module (testbench)
 TESTBENCH := testbench
 # module list
-FILELIST := stages/InstFetch.sv
+FILELIST := akarin_riscv.sv
+FILELIST += mem_if.sv
+FILELIST += ISA/RISCV_ISA.sv
+FILELIST += stages/InstFetch.sv
 FILELIST += stages/InstDec.sv
 FILELIST += stages/RegFile.sv
 FILELIST += stages/ALU.sv
-FILELIST += ISA/RISCV_ISA.sv
 
 # include directory
 INCDIR += ./

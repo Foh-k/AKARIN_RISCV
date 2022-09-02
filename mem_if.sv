@@ -20,7 +20,7 @@
 *******************************************************************/
 
 interface memory_bus();
-    logic [16:2] addr;
+    logic [31:2] addr;
     logic [31:0] dataD;
     logic [31:0] dtaQ;
     logic read, write;

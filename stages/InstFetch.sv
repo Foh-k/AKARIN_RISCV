@@ -13,15 +13,16 @@
 /******************************************************************* 
 * port description
 *   clk, rst, stall : クロック, リセット, ストール信号
+*   InstBus : 命令メモリとのバス、中身は次
+*       addr_o          : メモリへの要求アドレス
+*       dataD_o         : メモリへの書き込みデータ (ただし命令メモリに書き込むことはない)
+*       dataQ_i         : メモリからの入力データ
+*       read_o, write_o : read信号, write信号 (書き込みは行わないのでwrite信号は常に0)
+*       ready_i         : メモリからのデータの到達を通知するフラグ
+*       byteSel_o       : バイトセレクタ,命令は32ビット固定なので常にオール1
 *   stop_o          : 命令が到達するまでパイプラインをストールさせる
 *   dec2if_i        : デコードステージからの入力パケット
 *   if2dec_o        : デコードステージへの出力パケット
-*   addr_o          : メモリへの要求アドレス
-*   dataD_o         : メモリへの書き込みデータ (ただし命令メモリに書き込むことはない)
-*   dataQ_i         : メモリからの入力データ
-*   read_o, write_o : read信号, write信号 (書き込みは行わないのでwrite信号は常に0)
-*   ready_i         : メモリからのデータの到達を通知するフラグ
-*   byteSel_o       : バイトセレクタ,命令は32ビット固定なので常にオール1
 *******************************************************************/
 
 `include "../akarin.svh"
@@ -29,18 +30,13 @@
 module InstFetch(
     input   logic clk, rst,
     input   logic stall,
+    // connect to instruction bus
+    memory_bus.master instBus,
+
     output  logic stop_o,
 
     input   dec2ifPkt dec2if_i,
-    output  if2decPkt if2dec_o,
-
-    // connect to instruction bus
-    output  logic [31:2] addr_o,
-    output  logic [31:0] dataD_o,
-    input   logic [31:0] dataQ_i,
-    output  logic read_o, write_o,
-    input   logic ready_i,
-    output  logic byteSel_o
+    output  if2decPkt if2dec_o
 );
     
     dec2ifPkt dec2if_reg; // Pipeline register
@@ -50,11 +46,11 @@ module InstFetch(
 
     always_comb begin
         // Data path for external synchronous unit
-        addr_o = (dec2if_i.pcValid ? dec2if_i.pc : 30'hx);
-        dataD_o = 32'hx; // 使わないので適当な値
-        read_o = dec2if_i.pcValid;
-        write_o = 1'b0;
-        byteSel_o = 4'b1111; // 読み出しは32ビット
+        instBus.addr = (dec2if_i.pcValid ? dec2if_i.pc : 30'hx);
+        instBus.dataD = 32'hx; // 使わないので適当な値
+        instBus.read = dec2if_i.pcValid;
+        instBus.write = 1'b0;
+        instBus.byteSel = 4'b1111; // 読み出しは32ビット
 
         // Data path for internal combinational circuits
         if (if2dec_holdValid) begin
@@ -71,11 +67,11 @@ module InstFetch(
     end
 
     always_comb begin
-        if (ready_i) begin
+        if (instBus.ready) begin
             // 命令キャッシュからデータが到達
             if2dec.pc = dec2if_reg.pc;
             if2dec.instValid = dec2if_reg.pcValid;
-            if2dec.inst32 = dataQ_i;
+            if2dec.inst32 = instBus.dataQ;
         end else begin
             // ストール
             if2dec.pc = 30'h3fffffff;
@@ -90,7 +86,7 @@ module InstFetch(
             if2dec_holdValid <= 0;
         end else begin
             if (stall) begin
-                if (ready_i) begin
+                if (instBus.ready) begin
                     if2dec_holdValid <= 1;
                     if2dec_holdReg <= if2dec_o;
                 end
