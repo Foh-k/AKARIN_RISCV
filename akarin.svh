@@ -16,7 +16,6 @@ typedef enum logic [7:0] {
     ALU_AND,        // AND, ANDI
     ALU_OR,         // OR, ORI
     ALU_XOR,        // XOR, XORI
-    ALU_NOR,        // NOR
     ALU_LUI,        // LUI
     ALU_SLT,        // SLT, SLTI
     ALU_SLTU,       // SLTU, SLTIU
