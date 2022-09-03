@@ -2,6 +2,7 @@
 TESTBENCH := testbench
 # module list
 FILELIST := akarin_riscv.sv
+# FILELIST :=
 FILELIST += mem_if.sv
 FILELIST += ISA/RISCV_ISA.sv
 FILELIST += stages/InstFetch.sv
@@ -25,4 +26,5 @@ compile:
 
 sim: compile
 	vsim $(TESTBENCH)
+
 
