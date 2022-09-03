@@ -33,9 +33,9 @@ module alu(
         end
 
         if (dec2ex_reg.instValid) begin
-            `define RES  ex2mem_o.res;
-            `define SRC1 dec2ex_reg.src1;
-            `define SRC2 dec2ex_reg.src2;
+            `define RES  ex2mem_o.res
+            `define SRC1 dec2ex_reg.src1
+            `define SRC2 dec2ex_reg.src2
 
             case (dec2ex_reg.aluOp)
                 ALU_ADD :

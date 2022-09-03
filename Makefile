@@ -2,9 +2,10 @@
 TESTBENCH := testbench
 # module list
 FILELIST := stages/InstFetch.sv
-FILELIST += ISA/RISCV_ISA.sv
 FILELIST += stages/InstDec.sv
 FILELIST += stages/RegFile.sv
+FILELIST += stages/ALU.sv
+FILELIST += ISA/RISCV_ISA.sv
 
 # include directory
 INCDIR += ./
@@ -22,3 +23,4 @@ compile:
 
 sim: compile
 	vsim $(TESTBENCH)
+

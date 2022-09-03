@@ -50,6 +50,7 @@ typedef struct packed {
     alu_op_t aluOp;
     logic [4:0] destReg;
     logic [31:0] src1, src2;
+    logic [31:0] aux;
 } dec2exPkt;
 
 typedef struct packed {
