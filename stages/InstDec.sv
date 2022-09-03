@@ -25,7 +25,7 @@
 * ex2mem_i  : 実行ステージからのライトバックパケット
 *******************************************************************/
 
-`include "../akarin.svh"
+// `include "../akarin.svh"
 `include "../ISA/RISCV_ISA.sv"
 
 module InstDec(

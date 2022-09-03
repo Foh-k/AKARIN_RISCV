@@ -8,6 +8,9 @@
 *   コア内で利用する構造体、共用体の定義
 *******************************************************************/
 
+`ifndef _AKARIN_SVH_
+`define _AKARIN_SVH_
+
 // ALU Control信号
 typedef enum logic [7:0] { 
     ALU_NOP = 0,    // NOPはADDI
@@ -68,3 +71,5 @@ typedef struct packed {
     logic [4:0] destReg;
     logic [31:0] res;
 } mem2wbPkt;
+
+`endif

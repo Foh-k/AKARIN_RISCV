@@ -8,10 +8,10 @@
 * 
 *******************************************************************/
 
-`include "../akarin.svh"
+// `include "../akarin.svh"
 
 module ALU(
-    input clk, rst,
+    input logic clk, rst,
     input logic stall,
     input dec2exPkt dec2ex_i,
     output ex2memPkt ex2mem_o

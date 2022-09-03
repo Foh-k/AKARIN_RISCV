@@ -22,7 +22,7 @@
 interface memory_bus();
     logic [31:2] addr;
     logic [31:0] dataD;
-    logic [31:0] dtaQ;
+    logic [31:0] dataQ;
     logic read, write;
     logic ready;
     logic [3:0] byteSel;

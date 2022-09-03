@@ -59,7 +59,7 @@ module InstFetch(
             if2dec_o = if2dec;
         end
 
-        if (ready_i) begin
+        if (instBuf.ready) begin
             stop_o = 0;
         end else begin
             stop_o = dec2if_reg.pcValid && ~if2dec_holdValid;
