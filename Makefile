@@ -1,8 +1,10 @@
 # top module (testbench)
 TESTBENCH := testbench
 # module list
-FILELIST := akarin_riscv.sv
-# FILELIST :=
+FILELIST :=
+FILELIST += test_akarin.sv
+FILELIST += sram.sv
+FILELIST += akarin_riscv.sv
 FILELIST += mem_if.sv
 FILELIST += ISA/RISCV_ISA.sv
 FILELIST += stages/InstFetch.sv
