@@ -21,7 +21,7 @@ module test;
         rst = 0;
 
         // 3000x1nsで強制終了
-        #30000 $finish    
+        #30000 $finish;    
     end
 
     // Clock Generator (10MHz)
