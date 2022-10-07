@@ -28,7 +28,7 @@ module test;
     always #50 clk = ~clk;
 
 
-    akarin_riscv(.clk, .rst, .instBus, .dataBus);
+    akarin_riscv core (.clk, .rst, .instBus, .dataBus);
 
     sram_4kx32 inst_mem (.clk, .mbus(instBus));
 

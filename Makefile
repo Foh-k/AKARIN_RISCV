@@ -1,5 +1,5 @@
 # top module (testbench)
-TESTBENCH := testbench
+TESTBENCH := test
 # module list
 FILELIST :=
 FILELIST += test_akarin.sv
