@@ -3,7 +3,47 @@
 *                                   Copyright(C) 2013 Project YY
 *******************************************************************************/
 
-`timescale    1ns/100ps
+/******************************************************************* 
+*  test_akarin.sv
+* テストモジュール
+* テスト回路は論理合成する必要がないのでSystemVerilogの記述力を活かすことができる
+*******************************************************************/
+
+`timescale  1ns/100ps
+
+module test;
+    logic clk, rst;
+    memory_bus instBus();
+    // memory_bus dataBus();
+
+    initial begin
+        clk = 0;
+        rst = 0;
+
+        // 3000x1nsで強制終了
+        #30000 $finish;    
+    end
+
+    // Clock Generator (10MHz)
+    always #50 clk = ~clk;
+
+
+    akarin_riscv core (.clk, .rst, .instBus);
+
+    sram_4kx32 inst_mem (.clk, .mbus(instBus));
+
+    initial begin
+        $readmemh ("test.txt", inst_mem.mem);
+    end
+
+    initial begin
+    `ifdef USE_NCVLOG
+        // For cadence verilog simulator
+        $shm_open("waves.shm");
+        $shm_probe("AMC");
+    `endif
+    end
+endmodule
 
 // 4k x 32ワードサイズのSRAM, 命令メモリ(キャッシュ)として利用
 module sram_4kx32 (
