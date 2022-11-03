@@ -14,26 +14,24 @@ module ALU(
     input logic clk, rst,
     input logic stall,
     input dec2exPkt dec2ex_i,
-    output ex2memPkt ex2mem_o
+    output ex2memPkt ex2wb_o
 );
     dec2exPkt dec2ex_reg; // Pipelineregister
 
-
     always_comb begin
-        ex2mem_o = 'bx;
-        ex2mem_o.pc = dec2ex_reg.pc;
-        ex2mem_o.inst32 = dec2ex_reg.inst32;
-        ex2mem_o.instValid = dec2ex_reg.instValid;
-        ex2mem_o.aux = dec2ex_reg.aux;
-
+        ex2wb_o = 'bx;
+        ex2wb_o.pc = dec2ex_reg.pc;
+        ex2wb_o.inst32 = dec2ex_reg.inst32;
+        ex2wb_o.instValid = dec2ex_reg.instValid;
+        
         if (dec2ex_reg.aluOp == ALU_NOP) begin
-            ex2mem_o.destReg = 5'h0;
+            ex2wb_o.destReg = 5'h0;
         end begin
-            ex2mem_o.destReg = dec2ex_reg.destReg;
+            ex2wb_o.destReg = dec2ex_reg.destReg;
         end
 
         if (dec2ex_reg.instValid) begin
-            `define RES  ex2mem_o.res
+            `define RES  ex2wb_o.res
             `define SRC1 dec2ex_reg.src1
             `define SRC2 dec2ex_reg.src2
 

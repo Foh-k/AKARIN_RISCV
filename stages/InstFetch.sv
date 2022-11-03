@@ -30,10 +30,10 @@
 module InstFetch(
     input   logic clk, rst,
     input   logic stall,
+    output  logic stop_o,
+
     // connect to instruction bus
     memory_bus.master instBus,
-
-    output  logic stop_o,
 
     input   dec2ifPkt dec2if_i,
     output  if2decPkt if2dec_o

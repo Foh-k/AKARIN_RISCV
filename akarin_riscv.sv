@@ -20,24 +20,22 @@
 
 module akarin_riscv(
    input logic clk, rst,
-   memory_bus.master instBus,
-   memory_bus.master dataBus
-   // output logic run
+   memory_bus.master instBus
  );
 
-   logic if_stop, mem_stop; 
+   logic if_stop; 
    logic stall;
    if2decPkt if2dec;
    dec2ifPkt dec2if;
    dec2exPkt dec2ex;
-   ex2memPkt ex2mem;
+   ex2wbPkt ex2wb;
 
-   assign stall = if_stop | mem_stop;
+   assign stall = if_stop;
 
    InstFetch ifu (
       .clk, .rst, .stall,
-      .instBus,
-      .stop_o  (if_stop),
+      .stop_o     (if_stop),
+      .instBus    (instBus),
       .dec2if_i   (dec2if),
       .if2dec_o   (if2dec)
    );
@@ -47,13 +45,12 @@ module akarin_riscv(
       .if2dec_i   (if2dec),
       .dec2if_o   (dec2if),
       .dec2ex_o   (dec2ex),
-      .ex2mem_i   (ex2mem),
-      .mem2wb_i   (mem2wb)
+      .ex2wb_i    (ex2wb),
    );
 
    ALU exu (
       .clk, .rst, .stall,
       .dec2ex_i   (dec2ex),
-      .ex2mem_o   (ex2mem)
+      .ex2wb_o    (ex2wb)
    );
  endmodule
