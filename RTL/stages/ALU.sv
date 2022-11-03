@@ -8,7 +8,7 @@
 * 
 *******************************************************************/
 
-`include "../akarin.svh"
+`include "../include/akarin.svh"
 
 module ALU(
     input logic clk, rst,

@@ -16,7 +16,7 @@
 *  
 *******************************************************************/
 
-`include "akarin.svh"
+`include "include/akarin.svh"
 
 module akarin_riscv(
    input logic clk, rst,

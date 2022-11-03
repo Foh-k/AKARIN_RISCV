@@ -25,7 +25,7 @@
 *   if2dec_o        : デコードステージへの出力パケット
 *******************************************************************/
 
-`include "../akarin.svh"
+`include "../include/akarin.svh"
 
 module InstFetch(
     input   logic clk, rst,
