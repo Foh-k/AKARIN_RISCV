@@ -8,13 +8,13 @@
 * 
 *******************************************************************/
 
-`include "../include/akarin.svh"
+`include "include/akarin.svh"
 
 module ALU(
     input logic clk, rst,
     input logic stall,
     input dec2exPkt dec2ex_i,
-    output ex2memPkt ex2wb_o
+    output ex2wbPkt ex2wb_o
 );
     dec2exPkt dec2ex_reg; // Pipelineregister
 

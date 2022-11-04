@@ -25,8 +25,7 @@
 * ex2mem_i  : 実行ステージからのライトバックパケット
 *******************************************************************/
 
-`include "../include/akarin.svh"
-`include "../ISA/RISCV_ISA.sv"
+`include "include/akarin.svh"
 
 module InstDec(
     input logic clk, rst,
@@ -40,7 +39,6 @@ module InstDec(
     if2decPkt if2dec_reg; // Pipeline register
     logic [31:0] rs1Val_rf, rs2Val_rf; // レジスタファイルからの値
     logic [31:0] rs1Val, rs2Val; // フォワーディングも考慮した実際に利用する値
-    dec_op_t decOp;
     logic [31:2] pc, nextPc; // 下位2ビットは0
 
     // レジスタファイルのインスタンス化
@@ -50,9 +48,9 @@ module InstDec(
         .rs2Num_i (if2dec_i.inst32[24:20]),
         .rs1Val_o (rs1Val_rf),
         .rs2Val_o (rs2Val_rf),
-        .rdNum_i (ex2wb_i.dstReg),
+        .rdNum_i (ex2wb_i.destReg),
         .rdVal_i (ex2wb_i.res),
-        .regiWrite_i (ex2wb_i.instValid)
+        .regWrite_i (ex2wb_i.instValid)
     );
 
     always_comb begin
@@ -118,7 +116,7 @@ module InstDec(
                     end
 
                     `FN3_SR : begin
-                        case (dec2ex_reg.inst32[31:25])
+                        case (if2dec_reg.inst32[31:25])
                             `FN7_SRL : begin
                                 dec2ex_o.aluOp = ALU_SRL;
                             end
@@ -177,7 +175,7 @@ module InstDec(
                     end
 
                     `FN3_SR : begin
-                        case (dec2ex_reg.inst32[31:25])
+                        case (if2dec_reg.inst32[31:25])
                             `FN7_SRL : begin
                                 dec2ex_o.aluOp = ALU_SRL;
                             end

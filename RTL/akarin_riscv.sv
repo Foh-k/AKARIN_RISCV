@@ -45,7 +45,7 @@ module akarin_riscv(
       .if2dec_i   (if2dec),
       .dec2if_o   (dec2if),
       .dec2ex_o   (dec2ex),
-      .ex2wb_i    (ex2wb),
+      .ex2wb_i    (ex2wb)
    );
 
    ALU exu (
