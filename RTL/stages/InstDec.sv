@@ -131,10 +131,9 @@ module InstDec(
             // 即値命令 : Type-I
             `OP_OP_IMM : begin
                 // Type-I命令で共通
+                // RISC-VではCSR以外の即値は常に符号拡張される
                 dec2ex_o.destReg = if2dec_reg.inst32[11:7];
                 dec2ex_o.src1 = rs1Val;
-                // RISC-VではCSR以外の即値は常に符号拡張される
-                dec2ex_o.src2 = {{16{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[31:20]};
 
                 // RV32IのタイプR命令はADD,SUB,SRL,SRA以外はFunct3で判別
                 case (if2dec_reg.inst32[14:12])
@@ -142,46 +141,56 @@ module InstDec(
                         case (if2dec_reg.inst32[31:25])
                             `FN7_ADD : begin
                                 dec2ex_o.aluOp = ALU_ADD;
+                                dec2ex_o.src2 = {{16{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[31:20]};
                             end
                             
                             `FN7_SUB : begin
-                                dec2ex_o.aluOp = ALU_SUB;    
+                                dec2ex_o.aluOp = ALU_SUB; 
+                                dec2ex_o.src2 = {{16{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[31:20]};   
                             end
                         endcase
                     end
 
                     `FN3_SLT : begin
                         dec2ex_o.aluOp = ALU_SLT;
+                        dec2ex_o.src2 = {{16{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[31:20]};
                     end
 
                     `FN3_SLTU : begin
                         dec2ex_o.aluOp = ALU_SLTU;
+                        dec2ex_o.src2 = {{16{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[31:20]};
                     end
 
                     `FN3_AND : begin
                         dec2ex_o.aluOp = ALU_AND;
+                        dec2ex_o.src2 = {{16{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[31:20]};
                     end
 
                     `FN3_OR : begin
                         dec2ex_o.aluOp = ALU_OR;
+                        dec2ex_o.src2 = {{16{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[31:20]};
                     end
 
                     `FN3_XOR : begin
                         dec2ex_o.aluOp = ALU_XOR;
+                        dec2ex_o.src2 = {{16{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[31:20]};
                     end
 
                     `FN3_SLL : begin
                         dec2ex_o.aluOp = ALU_SLL;
+                        dec2ex_o.src2 = {{27{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[24:20]};
                     end
 
                     `FN3_SR : begin
                         case (if2dec_reg.inst32[31:25])
                             `FN7_SRL : begin
                                 dec2ex_o.aluOp = ALU_SRL;
+                                dec2ex_o.src2 = {{27{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[24:20]};
                             end
                                 
                             `FN7_SRA : begin
                                 dec2ex_o.aluOp = ALU_SRA;
+                                dec2ex_o.src2 = {{27{if2dec_reg.inst32[31]}}, if2dec_reg.inst32[24:20]};
                             end
                         endcase
                     end
