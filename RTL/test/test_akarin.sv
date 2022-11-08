@@ -33,7 +33,7 @@ module test;
     sram_4kx32 inst_mem (.clk, .mbus(instBus));
 
     initial begin
-        $readmemh ("test.txt", inst_mem.mem);
+        $readmemh ("test/test.txt", inst_mem.mem);
     end
 
     initial begin
