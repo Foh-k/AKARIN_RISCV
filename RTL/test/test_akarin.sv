@@ -20,6 +20,8 @@ module test;
         clk = 0;
         rst = 0;
 
+        #100     rst = 1;
+
         // 3000x1nsで強制終了
         #30000 $finish;    
     end
@@ -33,7 +35,7 @@ module test;
     sram_4kx32 inst_mem (.clk, .mbus(instBus));
 
     initial begin
-        $readmemh ("test.txt", inst_mem.mem);
+        $readmemb ("./test/test.txt", inst_mem.mem);
     end
 
     initial begin
@@ -50,7 +52,8 @@ module sram_4kx32 (
     input logic clk,
     memory_bus.slave mbus
 );
-    parameter mem_words = 4096; // 4k
+    // parameter mem_words = 4096; // 4k
+    parameter mem_words = 32;
 
     reg [31:0] mem [mem_words-1:0];
     reg mbus_ready_delay;
@@ -64,7 +67,7 @@ module sram_4kx32 (
         // メモリへの書き込み
         if (mbus.write) begin
             if (mbus.byteSel[0]) begin
-                mem[mbus.addr][7:0] <= m.bus.dataD[7:0];
+                mem[mbus.addr][7:0] <= mbus.dataD[7:0];
             end
             if (mbus.byteSel[1]) begin
                 mem[mbus.addr][15:8] <= mbus.dataD[15:8];

@@ -2,7 +2,7 @@
 TESTBENCH := test
 # module list
 FILELIST :=
-# FILELIST += test/test_akarin.sv
+FILELIST += test/test_akarin.sv
 FILELIST += akarin_riscv.sv
 FILELIST += mem_if.sv
 FILELIST += ISA/RISCV_ISA.sv
